@@ -5,7 +5,7 @@ axios.defaults.baseURL = 'https://pixabay.com/api/?';
 export const imageFind = async () => {
   const response = axios.get('', {
     params: {
-      q: isValidInputTimeValue,
+      // q: isValidInputTimeValue,
       key: '39751957-699f95fae17e6e2f35ebbbaf7',
       image_type: 'photo',
       orientation: 'horizontal',

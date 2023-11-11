@@ -15,9 +15,10 @@ class App extends Component {
     return (
       <Div>
         <SearchBar />
+        <Loader />
+
         <ImageGalery />
         <Button />
-        <Loader />
       </Div>
     );
   }
