@@ -11,13 +11,15 @@ class App extends Component {
     images: [],
     query: '',
     page: 1,
+    isLader: false,
   };
 
   handelQuery = event => {
     this.setState({
       images: [],
-      query: event,
+      query: `${Date.now()}/${event}`,
       page: 1,
+      loadMore: '',
     });
   };
 
@@ -31,11 +33,17 @@ class App extends Component {
 
   fetchImages = async () => {
     try {
-      const targetImages = await imageFind(this.state.query);
-      this.setState({
-        images: targetImages,
-      });
-    } catch (error) {}
+      this.setState({ isLoading: true });
+      const splitQuery = this.state.query.split(/\/(.*)/)[1];
+      const { totalHits, hits } = await imageFind(splitQuery, this.state.page);
+      this.setState(prevState => ({
+        images: [...prevState.images, ...hits],
+        loadMore: this.state.page < Math.ceil(totalHits / 12),
+      }));
+    } catch (error) {
+    } finally {
+      this.setState({ isLoading: false });
+    }
   };
 
   componentDidUpdate(prevProps, prevState) {
@@ -48,13 +56,14 @@ class App extends Component {
   }
 
   render() {
+    const { images, isLoading, loadMore } = this.state;
     return (
       <Div>
         <SearchBar onSubmit={this.handelQuery} />
-        <Loader />
 
-        <ImageGalery hits={this.state.images} />
-        <Button />
+        <ImageGalery hits={images} />
+        {isLoading && <Loader />}
+        {loadMore && <Button onClick={this.handelLoadMore} />}
       </Div>
     );
   }
