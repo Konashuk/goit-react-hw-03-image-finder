@@ -1,10 +1,10 @@
 import { ImageGaleryItem } from './imageGalleryItem';
 import { ImageGallery } from './imageGalery.styled';
 
-export const ImageGalery = () => {
+export const ImageGalery = ({ hits }) => {
   return (
     <ImageGallery>
-      <ImageGaleryItem />
+      <ImageGaleryItem hits={hits} />
     </ImageGallery>
   );
 };

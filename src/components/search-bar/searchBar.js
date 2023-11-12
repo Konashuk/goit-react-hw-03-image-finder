@@ -8,16 +8,22 @@ import {
   SearchFormInput,
 } from './searchBar.styled';
 
-export const SearchBar = () => {
+export const SearchBar = ({ onSubmit }) => {
+  const handleSubmit = event => {
+    event.preventDefault();
+    const inputValue = event.target.elements.searchInput.value;
+    onSubmit(inputValue);
+  };
   return (
     <HeaderSearch>
-      <SearchForm>
+      <SearchForm onSubmit={handleSubmit}>
         <SearchFormButton type="submit">
           <GrSearch />
           <SearchFormButtonLabel></SearchFormButtonLabel>
         </SearchFormButton>
 
         <SearchFormInput
+          name="searchInput"
           type="text"
           autoComplete="off"
           autoFocus
