@@ -4,7 +4,13 @@ import { ImageGallery } from './imageGalery.styled';
 export const ImageGalery = ({ hits }) => {
   return (
     <ImageGallery>
-      <ImageGaleryItem hits={hits} />
+      {hits.map(({ id, largeImageURL, webformatURL }) => (
+        <ImageGaleryItem
+          key={id}
+          largeImageURL={largeImageURL}
+          webformatURL={webformatURL}
+        />
+      ))}
     </ImageGallery>
   );
 };
